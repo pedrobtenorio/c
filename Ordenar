@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+//############################
+//NODE OF THE LSIT
+typedef struct node{
+	int element;
+	struct node *next;
+}node;
+
+//############################
+void printList(node *head)
+{
+	node *aux = head;
+	while(aux!=NULL)
+	{
+		printf("%d ",aux->element );
+		aux = aux->next;
+	}
+}
+
+void swap(node *a, node *b)
+{
+	int temp = a->element; 
+    a->element = b->element; 
+    b->element = temp;  
+}
+
+// THIS FUNCTION SORTED A LIST
+void sorted(node *head)
+{
+	int swapped, i;
+	node *ptr1;
+	node *lptr = NULL;
+	if (head == NULL)
+	{
+		return;
+	}
+	do
+	{
+		swapped = 0;
+		ptr1 = head;
+		while(ptr1->next != lptr)
+		{
+			//printf("antes\n"); DEBUG
+			// PROBLEM SEGMENT FALT IS HERE:
+			if (ptr1->element > ptr1->next->element)
+			{
+				//printf("antes\n"); DEBUG
+				swap(ptr1 , ptr1->next);
+				swapped =1;
+			}
+			ptr1 = ptr1->next;
+		}
+		lptr = ptr1;
+	} while (swapped);
+}
+
+void *readList(node **head, int element)
+{
+	node *newNode = malloc(sizeof(node));
+	newNode->next = *head;
+	newNode->element = element;
+	*head = newNode;
+	return *head;
+}
+void *read(node *head)
+{
+	int i;
+	if (scanf("%d", &i)==EOF)
+	{
+		return head;
+	}
+	else 
+	{
+		head = readList(&head,i);
+		
+	}
+	read(head);
+}
+int main(void)
+{
+	node *head = NULL;
+	head = read(head);
+	sorted(head);
+	printList(head);
+	
+}
